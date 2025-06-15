@@ -10,41 +10,36 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get and trim the task text from input field
         const taskText = taskInput.value.trim();
 
-        // Check if the input is empty
+        // Check if the input is not empty
         if (taskText === '') {
             alert('Please enter a task!');
             return;
         }
 
-        // Create new list item element
+        // Create new list item
         const listItem = document.createElement('li');
         
-        // Create span element for task text
-        const taskSpan = document.createElement('span');
-        taskSpan.textContent = taskText;
-        
-        // Create delete button
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.className = 'delete-btn';
-        
-        // Add click event to delete button
-        deleteButton.addEventListener('click', function() {
-            taskList.removeChild(listItem);
-        });
+        // Set the text content of the list item to the task text
+        listItem.textContent = taskText;
 
-        // Append elements to list item
-        listItem.appendChild(taskSpan);
-        listItem.appendChild(deleteButton);
-        
+        // Create remove button
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.className = 'remove-btn';
+
+        // Add click event to remove button
+        removeButton.onclick = function() {
+            taskList.removeChild(listItem);
+        };
+
+        // Append remove button to list item
+        listItem.appendChild(removeButton);
+
         // Add list item to task list
         taskList.appendChild(listItem);
 
         // Clear the input field
         taskInput.value = '';
-        
-        // Focus back to input field for new task entry
-        taskInput.focus();
     }
 
     // Event listener for Add button click
@@ -54,13 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
     taskInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
             addTask();
-        }
-    });
-
-    // Optional: Add event listener for task completion toggle
-    taskList.addEventListener('click', function(event) {
-        if (event.target.tagName === 'SPAN') {
-            event.target.classList.toggle('completed');
         }
     });
 });
